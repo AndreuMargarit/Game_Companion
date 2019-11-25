@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GameCompanion</string>
+
+    <string name="tab_profile">Perfil</string>
+    <string name="tab_chat">Xat</string>
+    <string name="tab_news">Notícies</string>
+    <string name="tab_stream">Directe</string>
+    <string name="profile_register_button">Registre</string>
+    <string name="activity_register_username">Nom Usuari</string>
+    <string name="activity_register_email">Correu electrónic</string>
+    <string name="activity_register_password">Contrasenya</string>
+    <string name="register_error_invalid_username">Nom usuari requerit</string>
+</resources>

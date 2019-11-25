@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "29307246607",
+    "firebase_url": "https://my-awesome-game-companion.firebaseio.com",
+    "project_id": "my-awesome-game-companion",
+    "storage_bucket": "my-awesome-game-companion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29307246607:android:b9c39c67ad4f3ae71eab7a",
+        "android_client_info": {
+          "package_name": "com.andreumargarit.gamecompanion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29307246607-ih5dlm0nmbn4u0d8r8hvq7216else0km.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7zCJU9DCzhMCH6jrkVuOd30IYLl5ez48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29307246607-ih5dlm0nmbn4u0d8r8hvq7216else0km.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
