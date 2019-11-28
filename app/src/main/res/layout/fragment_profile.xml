@@ -22,5 +22,11 @@
         android:id = "@+id/usernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></TextView>
+    <ImageView
+        android:id = "@+id/avatarImageView"
+        android:layout_width="@dimen/button_item_height"
+        android:layout_height="@dimen/button_item_height"
+        android:src ="@drawable/icon_profile"
+        android:layout_gravity="center_horizontal"></ImageView>
 
 </LinearLayout>

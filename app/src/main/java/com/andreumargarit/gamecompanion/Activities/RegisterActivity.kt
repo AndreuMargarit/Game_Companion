@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    var passHiden = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -27,15 +29,19 @@ class RegisterActivity : AppCompatActivity() {
             ctrlActivityIndicator.visibility = View.GONE;
         }
             //TODO: strings.xml i dimens
+
         ShowPasswordButton.setOnClickListener {
-            if(ShowPasswordButton.text.toString().equals("Show")) {
-                passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
-                ShowPasswordButton.text = "Hide"
+            if(passHiden) {
+                passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
+                passHiden = false;
+                ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_show);
             }
             else {
-                passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
-                ShowPasswordButton.text = "Show";
+                passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                passHiden = true;
+                ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_hiden);
             }
+
         }
         registerButton.setOnClickListener {
             //Username, email and password

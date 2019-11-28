@@ -22,6 +22,10 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5361617698168727~3267269317"/>
+
     </application>
+
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
 
 </manifest>

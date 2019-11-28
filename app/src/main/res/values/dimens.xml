@@ -5,4 +5,5 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="textsize_medium">14dp</dimen>
+    <dimen name="REQUEST_IMAGE_CAPTURE">1</dimen>
 </resources>
