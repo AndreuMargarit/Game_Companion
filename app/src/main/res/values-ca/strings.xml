@@ -6,6 +6,7 @@
     <string name="tab_news">Notícies</string>
     <string name="tab_stream">Directe</string>
     <string name="profile_register_button">Registre</string>
+    <string name="profile_login_button">Entra</string>
     <string name="activity_register_username">Nom Usuari</string>
     <string name="activity_register_email">Correu electrónic</string>
     <string name="activity_register_password">Contrasenya</string>

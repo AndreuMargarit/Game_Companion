@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Activities.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/margin_medium"
+            android:orientation="vertical">
+
+            <EditText
+                android:id = "@+id/emailEditText"
+                android:hint="@string/activity_register_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_item_height"
+                android:layout_marginBottom="@dimen/margin_medium"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal">
+                <EditText
+                    android:id = "@+id/passwordEditText"
+                    android:hint="@string/activity_register_password"
+                    android:layout_width="296dp"
+                    android:layout_height="@dimen/button_item_height"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    />
+                <Button
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id = "@+id/ShowPasswordButton"
+                    android:background="@drawable/icon_password_show"/>
+            </LinearLayout>
+            <Button
+                android:id = "@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_item_height"
+                android:layout_marginTop="48dp"
+                android:text="Login"
+                />
+            <ProgressBar
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/loginCtrlActivityIndicator"
+                android:indeterminateOnly="true"
+                android:keepScreenOn="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
