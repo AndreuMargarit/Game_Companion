@@ -76,7 +76,6 @@ class RegisterActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {authResult ->
                     //Success
-                    //ctrlActivityIndicator.visibility = View.GONE;
                     Toast.makeText(emailEditText.context, "User Created Successfully", Toast.LENGTH_LONG).show()
 
                     //create user profile

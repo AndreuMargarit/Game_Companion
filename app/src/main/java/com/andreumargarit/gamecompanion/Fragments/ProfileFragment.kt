@@ -1,7 +1,9 @@
 package com.andreumargarit.gamecompanion.Fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -83,7 +85,13 @@ class ProfileFragment : Fragment() {
                 initUI()
             };
             FirebaseAuth.getInstance().currentUser?.uid?.let {userID ->
-                UserDao().get(UserId = userID, successListener = {user -> usernameTextView.text = user?.userName },
+                val username = requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE).getString("username", "")
+                usernameTextView.text = username
+                UserDao().get(UserId = userID, successListener = {
+                        user -> usernameTextView.text = user?.userName
+                requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+                    .edit().putString("username", user?.userName)
+                    .apply()},
                     failureListener = {
                         Log.w("ProfileFragment", it)
                     })
