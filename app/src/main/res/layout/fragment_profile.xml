@@ -13,6 +13,11 @@
     android:text = "@string/profile_register_button"/>
 
     <Button
+        android:id = "@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_item_height"
+        android:text = "@string/profile_login_button"/>
+    <Button
         android:id="@+id/logOutButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_item_height"

@@ -1,5 +1,6 @@
 package com.andreumargarit.gamecompanion.Activities
 
+import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
         Login.setOnClickListener {
             Login.setPaintFlags(Login.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-            ctrlActivityIndicator.visibility = View.GONE;
+            //startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
             //TODO: strings.xml i dimens
 
@@ -61,7 +62,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if(email.isBlank() && !Patterns.EMAIL_ADDRESS.matcher(email).matches())
             {
-                Toast.makeText(emailEditText.context, getString(R.string.register_error_invalid_email), Toast.LENGTH_LONG).show()
+                Toast.makeText(emailEditText.context, getString(R.string.register_login_error_invalid_email), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 

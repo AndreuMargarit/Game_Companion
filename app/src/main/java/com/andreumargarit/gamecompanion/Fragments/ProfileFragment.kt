@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.andreumargarit.gamecompanion.Activities.LoginActivity
 import com.andreumargarit.gamecompanion.Activities.RegisterActivity
 import com.andreumargarit.gamecompanion.R
 import com.andreumargarit.gamecompanion.Utils.UserDao
@@ -62,13 +63,20 @@ class ProfileFragment : Fragment() {
     {
         if(FirebaseAuth.getInstance().currentUser == null) {
             registerButton.visibility = View.VISIBLE;
+            logOutButton.visibility = View.GONE;
+            loginButton.visibility = View.VISIBLE;
+            avatarImageView.visibility = View.GONE;
             registerButton.setOnClickListener {
                 startActivity(Intent(requireContext(), RegisterActivity::class.java))
+            }
+            loginButton.setOnClickListener {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
         }
         else{
             registerButton.visibility = View.GONE;
             logOutButton.visibility = View.VISIBLE;
+            loginButton.visibility = View.GONE;
             logOutButton.setOnClickListener{
                 FirebaseAuth.getInstance().signOut()
                 //Toast
