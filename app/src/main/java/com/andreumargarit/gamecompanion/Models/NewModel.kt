@@ -5,6 +5,6 @@ data class NewsList(
 )
 
 data class NewModel (
-    var text: String?,
+    var title: String? = null,
     var imageUrl:String? = null
 )

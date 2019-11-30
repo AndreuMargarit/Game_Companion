@@ -24,10 +24,10 @@ class NewsAdapter (var list: ArrayList<NewModel>) : RecyclerView.Adapter<NewsAda
 
 
     override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
-        val joke = list[position]
+        val new = list[position]
 
-        holder.newsText.text = joke.text;
-        Picasso.get().load(joke.imageUrl).into(holder.imageView);
+        holder.newsText.text = new.title;
+        Picasso.get().load(new.imageUrl).into(holder.imageView);
     }
 
     class ViewHolder(item: View): RecyclerView.ViewHolder(item) {

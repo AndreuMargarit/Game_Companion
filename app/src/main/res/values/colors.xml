@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name ="colorLoginLink">#0088FF</color>
+    <color name ="colorNewsBackground">#2134FF</color>
 </resources>
