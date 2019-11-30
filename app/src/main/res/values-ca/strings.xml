@@ -11,4 +11,5 @@
     <string name="activity_register_email">Correu electrónic</string>
     <string name="activity_register_password">Contrasenya</string>
     <string name="register_error_invalid_username">Nom usuari requerit</string>
+    <string name="news_title">NOTÍCIES</string>
 </resources>

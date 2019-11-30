@@ -2,6 +2,7 @@ package com.andreumargarit.gamecompanion.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.andreumargarit.gamecompanion.Fragments.NewsFragment
 import com.andreumargarit.gamecompanion.Fragments.ProfileFragment
 import com.andreumargarit.gamecompanion.R
 import com.google.android.gms.ads.AdRequest
@@ -29,11 +30,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.news ->{
                     FirebaseAnalytics.getInstance(this).logEvent("NewsTabClick", null)
+                    val newsFragment = NewsFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(fragmentContainer.id, newsFragment)
+                    fragmentTransaction.commit()
                 }
                 R.id.profile ->{
                     FirebaseAnalytics.getInstance(this).logEvent("ProfileTabClick", null)
-                    val profileFragment =
-                        ProfileFragment()
+                    val profileFragment = ProfileFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(fragmentContainer.id, profileFragment)
                     fragmentTransaction.commit()

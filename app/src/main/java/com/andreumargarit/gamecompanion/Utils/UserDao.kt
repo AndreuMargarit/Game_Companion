@@ -1,5 +1,6 @@
 package com.andreumargarit.gamecompanion.Utils
 
+import com.andreumargarit.gamecompanion.Models.NewModel
 import com.andreumargarit.gamecompanion.Models.UserModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
@@ -73,5 +74,29 @@ class UserDao {
                 failureListener(it);
             }
 
+    }
+    fun getAllNews(successListener: (news: List<NewModel>) -> (Unit), failureListener: (Error: Exception) -> (Unit)) {
+        FirebaseFirestore.getInstance()
+            .collection(Constants.COLLECTION_NEWS)
+            //Get All Documents
+            .get()
+            //On Success
+            .addOnSuccessListener { querySnapshot ->
+                //Query Snapshot contains documents & metadata
+                val documents = querySnapshot.documents
+                val newsList = ArrayList<NewModel>()
+                documents.forEach { documentSnapshot ->
+                    //Document snapshot contains data & metadata
+                    val new = documentSnapshot.toObject(NewModel::class.java)
+                    new?.let {
+                        newsList.add(new);
+
+                    }
+                }
+                successListener(newsList);
+            }
+            .addOnFailureListener {
+                failureListener(it);
+            }
     }
 }
