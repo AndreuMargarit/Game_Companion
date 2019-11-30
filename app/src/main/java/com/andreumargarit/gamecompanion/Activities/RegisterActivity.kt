@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -22,12 +23,13 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        
 
+        ctrlActivityIndicator.visibility = View.GONE
 
         Login.setOnClickListener {
             Login.setPaintFlags(Login.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-            //startActivity(Intent(requireContext(), RegisterActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
             //TODO: strings.xml i dimens
 
@@ -72,6 +74,8 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            ctrlActivityIndicator.visibility = View.VISIBLE
+
             //Send to firebase
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {authResult ->
@@ -84,18 +88,22 @@ class RegisterActivity : AppCompatActivity() {
                         email,
                         authResult.user?.uid
                     )
+                    FirebaseFirestore.setLoggingEnabled(true);
                     FirebaseFirestore.getInstance()
                         .collection("users")
                         .document(authResult.user?.uid ?: "")
                         .set(user)
                         .addOnSuccessListener {
                             Toast.makeText(usernameEditText.context, "username created successfully", Toast.LENGTH_LONG).show()
+                            //Close Activity
+                            finish()
                         }
                         .addOnFailureListener{
                             Toast.makeText(usernameEditText.context, it.localizedMessage, Toast.LENGTH_LONG).show()
+                            ctrlActivityIndicator.visibility = View.GONE
                         }
-                    //Close Activity
-                    finish()
+
+
                 }
                 .addOnFailureListener{
                     Toast.makeText(emailEditText.context, it.localizedMessage, Toast.LENGTH_LONG).show()
