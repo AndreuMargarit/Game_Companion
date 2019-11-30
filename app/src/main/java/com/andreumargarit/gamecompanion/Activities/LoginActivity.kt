@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener {authResult ->
                         //Success
-                        Toast.makeText(emailEditText.context, "User Logged Successfully", Toast.LENGTH_LONG).show()
+                        Toast.makeText(emailEditText.context, "Welcome back", Toast.LENGTH_LONG).show()
 
                         //Close Activity
                         finish()
