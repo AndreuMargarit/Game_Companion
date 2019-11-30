@@ -46,7 +46,7 @@
                     android:background="@drawable/icon_password_show"/>
             </LinearLayout>
             <Button
-                android:id = "@+id/loginButton"
+                android:id = "@+id/activityLoginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_item_height"
                 android:layout_marginTop="48dp"
@@ -61,6 +61,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="32dp"
                 />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

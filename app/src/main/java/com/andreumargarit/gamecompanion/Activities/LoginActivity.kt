@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.ShowPasswordButton
 import kotlinx.android.synthetic.main.activity_register.emailEditText
 import kotlinx.android.synthetic.main.activity_register.passwordEditText
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,26 +27,26 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        loginCtrlActivityIndicator.visibility = View.GONE;
+        passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
+        loginCtrlActivityIndicator.visibility = View.GONE
 
         ShowPasswordButton.setOnClickListener {
-            if(passHiden) {
+            if (passHiden) {
                 passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
                 passHiden = false;
                 ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_show);
-            }
-            else {
-                passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
+            } else {
+                passwordEditText.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance();
                 passHiden = true;
                 ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_hiden);
             }
-
-            loginButton.setOnClickListener {
+        }
+            activityLoginButton.setOnClickListener {
                 //Email and password
                 val password = passwordEditText.text.toString();
                 val email = emailEditText.text.toString();
-                loginCtrlActivityIndicator.visibility = View.VISIBLE
+
                 passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
 
 
@@ -61,11 +62,13 @@ class LoginActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
+                loginCtrlActivityIndicator.visibility = View.VISIBLE
+
                 //Send to firebase
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener {authResult ->
                         //Success
-                        Toast.makeText(emailEditText.context, "User Created Successfully", Toast.LENGTH_LONG).show()
+                        Toast.makeText(emailEditText.context, "User Logged Successfully", Toast.LENGTH_LONG).show()
 
                         //Close Activity
                         finish()
@@ -82,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         }
-    }
+
 
     private fun PasswordValid(password: String):Boolean
     {
