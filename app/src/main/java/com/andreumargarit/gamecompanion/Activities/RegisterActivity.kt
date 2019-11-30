@@ -12,10 +12,14 @@ import android.view.View
 import android.widget.Toast
 import com.andreumargarit.gamecompanion.R
 import com.andreumargarit.gamecompanion.Models.UserModel
+import com.andreumargarit.gamecompanion.Utils.Constants
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.registerButton
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -28,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         ctrlActivityIndicator.visibility = View.GONE
 
         Login.setOnClickListener {
-            FirebaseAnalytics.getInstance(this).logEvent("LoginClickOnRegisterScene", null)
+            FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_LOGINCLICKONREGISTERSCENE, null)
             Login.setPaintFlags(Login.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -36,13 +40,17 @@ class RegisterActivity : AppCompatActivity() {
             //TODO: strings.xml i dimens
 
         ShowPasswordButton.setOnClickListener {
-            FirebaseAnalytics.getInstance(this).logEvent("RegisterPasswordButtonClick", null)
-            if(passHiden) {
+
+            FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_REGISTERPASSWORDBUTTONCLICK, null)
+
+            if(passHiden)
+            {
                 passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
                 passHiden = false;
                 ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_show);
             }
-            else {
+            else
+            {
                 passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
                 passHiden = true;
                 ShowPasswordButton.setBackgroundResource(R.drawable.icon_password_hiden);
@@ -59,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if(userName.isBlank())
             {
-                FirebaseAnalytics.getInstance(this).logEvent("WrongUsernameRegister", null)
+                FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_WRONGUSERNAMEREGISTER, null)
                 //Show error
                 //usernameEditText.error = getString(R.string.register_error_invalid_username)
                 Toast.makeText(usernameEditText.context, getString(R.string.register_error_invalid_username), Toast.LENGTH_LONG).show()
@@ -68,15 +76,15 @@ class RegisterActivity : AppCompatActivity() {
 
             if(email.isBlank() && !Patterns.EMAIL_ADDRESS.matcher(email).matches())
             {
-                FirebaseAnalytics.getInstance(this).logEvent("WrongEmailRegister", null)
+                FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_WRONGEMAILREGISTER, null)
                 Toast.makeText(emailEditText.context, getString(R.string.register_login_error_invalid_email), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             if(password.isBlank() && !PasswordValid(password))
             {
-                FirebaseAnalytics.getInstance(this).logEvent("WrongPasswordRegister", null)
-                Toast.makeText(passwordEditText.context, "Password must be 4 characters and contain, at least, 1 letter and 1 digit", Toast.LENGTH_LONG).show()
+                FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_WRONGPASSWORDREGISTER, null)
+                Toast.makeText(passwordEditText.context, getString(R.string.register_error_password), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -86,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {authResult ->
                     //Success
-                    Toast.makeText(emailEditText.context, "User Created Successfully", Toast.LENGTH_LONG).show()
+                    Toast.makeText(emailEditText.context, getString(R.string.register_user_created), Toast.LENGTH_LONG).show()
 
                     //create user profile
                     val user = UserModel(
@@ -94,24 +102,24 @@ class RegisterActivity : AppCompatActivity() {
                         email,
                         authResult.user?.uid
                     )
-                    FirebaseFirestore.setLoggingEnabled(true);
+
+                    FirebaseFirestore.setLoggingEnabled(true)
+
                     FirebaseFirestore.getInstance()
-                        .collection("users")
+                        .collection(Constants.FIELD_USERS)
                         .document(authResult.user?.uid ?: "")
                         .set(user)
                         .addOnSuccessListener {
-                            Toast.makeText(usernameEditText.context, "username created successfully", Toast.LENGTH_LONG).show()
+                            Toast.makeText(usernameEditText.context, getString(R.string.register_username_created), Toast.LENGTH_LONG).show()
                             //Close Activity
-                            FirebaseAnalytics.getInstance(this).logEvent("RegisterSuccessful", null)
+                            FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_SUCCESSFULLREGISTER, null)
                             finish()
                         }
                         .addOnFailureListener{
-                            FirebaseAnalytics.getInstance(this).logEvent("RegisterFailure", null)
+                            FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_FAILUREREGISTER, null)
                             Toast.makeText(usernameEditText.context, it.localizedMessage, Toast.LENGTH_LONG).show()
                             ctrlActivityIndicator.visibility = View.GONE
                         }
-
-
                 }
                 .addOnFailureListener{
                     Toast.makeText(emailEditText.context, it.localizedMessage, Toast.LENGTH_LONG).show()

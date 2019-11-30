@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -24,8 +25,10 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
 import android.util.Base64
+import androidx.appcompat.app.AppCompatActivity
+import com.andreumargarit.gamecompanion.Utils.Constants
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,57 +70,70 @@ class ProfileFragment : Fragment() {
 
     private fun initUI()
     {
-        if(FirebaseAuth.getInstance().currentUser == null) {
-            registerButton.visibility = View.VISIBLE;
-            logOutButton.visibility = View.GONE;
-            loginButton.visibility = View.VISIBLE;
-            avatarImageView.visibility = View.GONE;
-            usernameTextView.visibility = View.GONE;
-            registerTextQuestion.visibility = View.VISIBLE;
-            loginTextQuestion.visibility = View.VISIBLE;
+        if(FirebaseAuth.getInstance().currentUser == null)
+        {
+            profileLoggedLayout.visibility = View.GONE
+            profileNonLoggedLayout.visibility = View.VISIBLE
+
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+            //googleApu
+
             registerButton.setOnClickListener {
                 startActivity(Intent(requireContext(), RegisterActivity::class.java))
             }
+
             loginButton.setOnClickListener {
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
+
+            registerGoogleLogin.setOnClickListener{
+                Toast.makeText((requireContext()), "Hi", Toast.LENGTH_LONG).show()
+            }
+
         }
-        else{
-            registerButton.visibility = View.GONE;
-            logOutButton.visibility = View.VISIBLE;
-            loginButton.visibility = View.GONE;
-            avatarImageView.visibility = View.VISIBLE;
-            usernameTextView.visibility = View.VISIBLE;
-            registerTextQuestion.visibility = View.GONE;
-            loginTextQuestion.visibility = View.GONE;
+        else
+        {
+            profileLoggedLayout.visibility = View.VISIBLE
+            profileNonLoggedLayout.visibility = View.GONE
+
             logOutButton.setOnClickListener{
                 FirebaseAuth.getInstance().signOut()
                 //Toast
                 initUI()
             };
+
             FirebaseAuth.getInstance().currentUser?.uid?.let {userID ->
-                val username = requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE).getString("username", "")
+                val username = requireContext().getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE).getString(Constants.FIELD_USERNAME, "")
                 usernameTextView.text = username
 
-                val userPhoto = requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE).getString("userphoto", "")
+                val userPhoto = requireContext().getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE).getString(Constants.FIELD_USERPHOTO, "")
+
                 if(userPhoto != "")
                 {
                     val imageBytes = Base64.decode(userPhoto, 0)
                     val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                     avatarImageView.setImageBitmap(image)
                 }
-                UserDao().get(UserId = userID, successListener = {
-                        user -> usernameTextView.text = user?.userName
-                requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE)
-                    .edit().putString("username", user?.userName)
-                    .apply()},
+
+                UserDao().get(
+                    UserId = userID,
+                    successListener = {user ->
+                        usernameTextView.text = user?.userName
+                        requireContext().getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                            .edit().putString(Constants.FIELD_USERNAME, user?.userName)
+                            .apply()
+                    },
                     failureListener = {
                         Log.w("ProfileFragment", it)
                     })
             }
         }
+
         avatarImageView.setOnClickListener {
-            FirebaseAnalytics.getInstance(requireContext()).logEvent("ProfilePictureTaken", null)
+            FirebaseAnalytics.getInstance(requireContext()).logEvent(Constants.ANALYTICEVENT_PROFILEPICTRETAKEN, null)
             TakePicture()
         }
     }
@@ -151,11 +167,12 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 10 && resultCode == Activity.RESULT_OK)
         {//Camera result
-            val image = data?.extras?.get("data") as? Bitmap
+            val image = data?.extras?.get(Constants.FIELD_DATA) as? Bitmap
             image?.let {
                 avatarImageView.setImageBitmap(it)
                 //Save image to cloud
@@ -170,20 +187,21 @@ class ProfileFragment : Fragment() {
     {//Create
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val folderReference = FirebaseStorage.getInstance().reference.child("public/images/avatars/")
+        val folderReference = FirebaseStorage.getInstance().reference.child(Constants.FOLDER_AVATARS)
         val imageReference = folderReference.child("avatar.jpg") //TODO: unique name
         imageReference.putBytes(baos.toByteArray())
             .addOnSuccessListener {
-                Log.i("Profile Fragment", "Success uploading image")
+                Log.i("Profile Fragment", getString(R.string.profile_success_uploading_image_message))
                 imageReference.downloadUrl.addOnSuccessListener { uri ->
                     val url = uri.toString()
                 }
             }
             .addOnFailureListener{
-                Log.w("Profile Fragment", "Error uploading image")
+                Log.w("Profile Fragment", getString(R.string.profile_error_uploading_image_message))
                 it.printStackTrace()
             }
     }
+
     private fun SaveProfileImageToSharedPreferences(bitmap: Bitmap)
     {
         val baosPhoto = ByteArrayOutputStream()
@@ -191,8 +209,8 @@ class ProfileFragment : Fragment() {
         val imagePhoto = baosPhoto.toByteArray()
         val img_strPhoto: String = Base64.encodeToString(imagePhoto, 0);
 
-        requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE)
-            .edit().putString("userphoto", img_strPhoto)
+        requireContext().getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+            .edit().putString(Constants.FIELD_USERPHOTO, img_strPhoto)
             .apply()
     }
 }

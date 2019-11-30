@@ -5,15 +5,31 @@
     <string name="tab_chat">Chat</string>
     <string name="tab_news">News</string>
     <string name="tab_stream">Stream</string>
+
     <string name="profile_register_button">Register</string>
     <string name="profile_login_button">Login</string>
+    <string name="profile_logout_button">Logout</string>
+    <string name="profile_do_not_have_account">Don\'t have an account yet?</string>
+
+
     <string name="activity_register_username">Username</string>
     <string name="activity_register_email">Email</string>
     <string name="activity_register_password">Password</string>
     <string name="register_error_invalid_username">Username Required</string>
     <string name="register_login_error_invalid_email">Invalid Email</string>
+
     <string name="login_error_invalid_password">Invalid Password</string>
+
     <string name="news_title">NEWS</string>
+
+    <string name="profile_success_uploading_image_message">Image uploaded successfully</string>
+    <string name="profile_error_uploading_image_message">Something went wrong while uploading the image</string>
+
+    <string name="register_error_password">Password must be 4 characters long at least and contain, at least, 1 letter and 1 digit</string>
+    <string name="register_user_created">User created successfully</string>
+    <string name="register_username_created">Username created successfully</string>
+
+    <string name="profile_already_have_account">Already have an account?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

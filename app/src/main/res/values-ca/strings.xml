@@ -5,11 +5,29 @@
     <string name="tab_chat">Xat</string>
     <string name="tab_news">Notícies</string>
     <string name="tab_stream">Directe</string>
+
     <string name="profile_register_button">Registre</string>
     <string name="profile_login_button">Entra</string>
+    <string name="profile_logout_button">Desconectar</string>
+    <string name="profile_do_not_have_account">Encara no tens un compte?</string>
+
     <string name="activity_register_username">Nom Usuari</string>
     <string name="activity_register_email">Correu electrónic</string>
     <string name="activity_register_password">Contrasenya</string>
     <string name="register_error_invalid_username">Nom usuari requerit</string>
+    <string name="register_login_error_invalid_email">Email invàlid</string>
+
+    <string name="login_error_invalid_password">Contrasenya invàlida</string>
+
     <string name="news_title">NOTÍCIES</string>
+
+    <string name="profile_success_uploading_image_message">S\'ha carregat la imatge correctament</string>
+    <string name="profile_error_uploading_image_message">Ha ocurregut un problema al intentar carregar la imatge</string>
+
+    <string name="register_error_password">La contrasenya ha de tenir com a mínim 4 caràcters i ha de contenir, com a mínim, una lletra i un dígit</string>
+    <string name="register_user_created">S\'ha creat l\'usuari amb èxit</string>
+    <string name="register_username_created">S\'ha creat el nom d\'usuari amb èxit</string>
+
+    <string name="profile_already_have_account">Ja tens un compte?</string>
+
 </resources>

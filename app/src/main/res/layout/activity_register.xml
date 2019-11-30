@@ -11,11 +11,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_large">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_margin="@dimen/margin_medium"
             android:orientation="vertical">
@@ -25,72 +26,71 @@
                 android:hint="@string/activity_register_username"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_item_height"
-                android:layout_marginBottom="@dimen/margin_medium"
-                />
+                android:layout_marginBottom="@dimen/margin_medium"/>
 
             <EditText
                 android:id = "@+id/emailEditText"
                 android:hint="@string/activity_register_email"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_item_height"
-                android:layout_marginBottom="@dimen/margin_medium"
-                />
+                android:layout_marginBottom="@dimen/margin_medium"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
+
                 <EditText
                     android:id = "@+id/passwordEditText"
                     android:hint="@string/activity_register_password"
                     android:inputType="textPassword"
-                    android:layout_width="296dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/button_item_height"
-                    android:layout_marginBottom="@dimen/margin_medium"
-                    />
-                    <Button
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:id = "@+id/ShowPasswordButton"
-                        android:background="@drawable/icon_password_show"/>
-                </LinearLayout>
-                    <Button
-                        android:id = "@+id/registerButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/button_item_height"
-                        android:text="Register"
-                        />
-                    <ProgressBar
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:id="@+id/ctrlActivityIndicator"
-                        android:indeterminateOnly="true"
-                        android:keepScreenOn="true"
-                        android:layout_gravity="center_horizontal"
-                        />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="32dp"
-                        >
+                    android:layout_marginBottom="@dimen/margin_medium"/>
 
+                <Button
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id = "@+id/ShowPasswordButton"
+                    android:background="@drawable/icon_password_show"/>
 
-                        <TextView
+            </LinearLayout>
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
-                            android:text ="Already have an account? "/>
-                        <TextView
-                            android:id="@+id/Login"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
-                            android:textColor="@color/colorLoginLink"
-                            android:text="Login"/>
-                    </LinearLayout>
+            <Button
+                android:id = "@+id/registerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_item_height"
+                android:text="@string/profile_register_button"/>
+
+            <ProgressBar
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/ctrlActivityIndicator"
+                android:indeterminateOnly="true"
+                android:keepScreenOn="true"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_medium">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text ="@string/profile_already_have_account"/>
+
+                <TextView
+                    android:id="@+id/Login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/colorLoginLink"
+                    android:text="@string/profile_login_button"/>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
