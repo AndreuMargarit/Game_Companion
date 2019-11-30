@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -22,6 +23,10 @@ import com.google.firebase.firestore.auth.User
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
+import android.util.Base64
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +73,9 @@ class ProfileFragment : Fragment() {
             logOutButton.visibility = View.GONE;
             loginButton.visibility = View.VISIBLE;
             avatarImageView.visibility = View.GONE;
+            usernameTextView.visibility = View.GONE;
+            registerTextQuestion.visibility = View.VISIBLE;
+            loginTextQuestion.visibility = View.VISIBLE;
             registerButton.setOnClickListener {
                 startActivity(Intent(requireContext(), RegisterActivity::class.java))
             }
@@ -79,6 +87,10 @@ class ProfileFragment : Fragment() {
             registerButton.visibility = View.GONE;
             logOutButton.visibility = View.VISIBLE;
             loginButton.visibility = View.GONE;
+            avatarImageView.visibility = View.VISIBLE;
+            usernameTextView.visibility = View.VISIBLE;
+            registerTextQuestion.visibility = View.GONE;
+            loginTextQuestion.visibility = View.GONE;
             logOutButton.setOnClickListener{
                 FirebaseAuth.getInstance().signOut()
                 //Toast
@@ -87,6 +99,14 @@ class ProfileFragment : Fragment() {
             FirebaseAuth.getInstance().currentUser?.uid?.let {userID ->
                 val username = requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE).getString("username", "")
                 usernameTextView.text = username
+
+                val userPhoto = requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE).getString("userphoto", "")
+                if(userPhoto != "")
+                {
+                    val imageBytes = Base64.decode(userPhoto, 0)
+                    val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    avatarImageView.setImageBitmap(image)
+                }
                 UserDao().get(UserId = userID, successListener = {
                         user -> usernameTextView.text = user?.userName
                 requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE)
@@ -97,7 +117,6 @@ class ProfileFragment : Fragment() {
                     })
             }
         }
-        avatarImageView.visibility = View.VISIBLE;
         avatarImageView.setOnClickListener {
             TakePicture()
         }
@@ -141,6 +160,8 @@ class ProfileFragment : Fragment() {
                 avatarImageView.setImageBitmap(it)
                 //Save image to cloud
                 SaveImageToCloud(it)
+                //Save image to Shared Preferences
+                SaveProfileImageToSharedPreferences(it)
             }
         }
     }
@@ -163,5 +184,15 @@ class ProfileFragment : Fragment() {
                 it.printStackTrace()
             }
     }
+    private fun SaveProfileImageToSharedPreferences(bitmap: Bitmap)
+    {
+        val baosPhoto = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baosPhoto)
+        val imagePhoto = baosPhoto.toByteArray()
+        val img_strPhoto: String = Base64.encodeToString(imagePhoto, 0);
 
+        requireContext().getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+            .edit().putString("userphoto", img_strPhoto)
+            .apply()
+    }
 }
