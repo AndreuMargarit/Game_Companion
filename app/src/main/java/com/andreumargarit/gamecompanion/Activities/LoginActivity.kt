@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.andreumargarit.gamecompanion.Models.UserModel
 import com.andreumargarit.gamecompanion.R
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -31,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         loginCtrlActivityIndicator.visibility = View.GONE
 
         ShowPasswordButton.setOnClickListener {
+            FirebaseAnalytics.getInstance(this).logEvent("LoginPasswordButtonClick", null)
             if (passHiden) {
                 passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
                 passHiden = false;
@@ -52,12 +54,14 @@ class LoginActivity : AppCompatActivity() {
 
                 if(email.isBlank() && !Patterns.EMAIL_ADDRESS.matcher(email).matches())
                 {
+                    FirebaseAnalytics.getInstance(this).logEvent("WrongEmailLogin", null)
                     Toast.makeText(emailEditText.context, getString(R.string.register_login_error_invalid_email), Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
 
                 if(password.isBlank() && !PasswordValid(password))
                 {
+                    FirebaseAnalytics.getInstance(this).logEvent("WrongPasswordLogin", null)
                     Toast.makeText(passwordEditText.context, "Password must be 4 characters and contain, at least, 1 letter and 1 digit", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
@@ -69,11 +73,12 @@ class LoginActivity : AppCompatActivity() {
                     .addOnSuccessListener {authResult ->
                         //Success
                         Toast.makeText(emailEditText.context, "Welcome back", Toast.LENGTH_LONG).show()
-
+                        FirebaseAnalytics.getInstance(this).logEvent("LoginSuccessful", null)
                         //Close Activity
                         finish()
                     }
                     .addOnFailureListener{exception ->
+                        FirebaseAnalytics.getInstance(this).logEvent("LoginFailure", null)
                         if(exception is FirebaseAuthInvalidUserException)
                             emailEditText.error = getString(R.string.register_login_error_invalid_email)
                         else if(exception is FirebaseAuthInvalidCredentialsException)

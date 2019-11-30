@@ -24,8 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
 import android.util.Base64
-
-
+import com.google.firebase.analytics.FirebaseAnalytics
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -118,6 +117,7 @@ class ProfileFragment : Fragment() {
             }
         }
         avatarImageView.setOnClickListener {
+            FirebaseAnalytics.getInstance(requireContext()).logEvent("ProfilePictureTaken", null)
             TakePicture()
         }
     }
