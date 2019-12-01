@@ -1,5 +1,6 @@
 package com.andreumargarit.gamecompanion.Activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -9,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import com.andreumargarit.gamecompanion.Models.UserModel
 import com.andreumargarit.gamecompanion.R
+import com.andreumargarit.gamecompanion.Utils.Constants
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -74,6 +76,21 @@ class LoginActivity : AppCompatActivity() {
                         //Success
                         Toast.makeText(emailEditText.context, "Welcome back", Toast.LENGTH_LONG).show()
                         FirebaseAnalytics.getInstance(this).logEvent("LoginSuccessful", null)
+
+                        val previousEmail = getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                            .getString(Constants.FIELD_EMAIL, "")
+
+                        getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                            .edit().putString(Constants.FIELD_EMAIL, email)
+                            .apply()
+
+                        if(previousEmail != email){
+                            getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                                .edit().putString(Constants.FIELD_USERPHOTO, "")
+                                .apply()
+                        }
+
+
                         //Close Activity
                         finish()
                     }

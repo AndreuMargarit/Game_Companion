@@ -11,6 +11,7 @@ class Constants
         val FIELD_USERPHOTO = "userphoto"
         val FIELD_DATA = "data"
         val FIELD_USERS = "users"
+        val FIELD_EMAIL = "email"
 
         val ANALYTICEVENT_PROFILEPICTRETAKEN = "ProfilePictureTaken"
         val ANALYTICEVENT_LOGINCLICKONREGISTERSCENE = "LoginClickOnRegisterScene"

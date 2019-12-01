@@ -1,5 +1,6 @@
 package com.andreumargarit.gamecompanion.Activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
@@ -95,6 +96,16 @@ class RegisterActivity : AppCompatActivity() {
                 .addOnSuccessListener {authResult ->
                     //Success
                     Toast.makeText(emailEditText.context, getString(R.string.register_user_created), Toast.LENGTH_LONG).show()
+
+                    getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                        .edit().putString(Constants.FIELD_EMAIL, email)
+                        .apply()
+
+                    getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE)
+                        .edit().putString(Constants.FIELD_USERPHOTO, "")
+                        .apply()
+
+                    avatarImageView.setImageResource(R.drawable.icon_profile)
 
                     //create user profile
                     val user = UserModel(
