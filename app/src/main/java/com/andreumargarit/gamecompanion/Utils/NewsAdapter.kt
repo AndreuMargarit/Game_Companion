@@ -26,6 +26,15 @@ class NewsAdapter (var list: ArrayList<NewModel>) : RecyclerView.Adapter<NewsAda
     override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
         val new = list[position]
 
+        //val stream = list[position]
+
+        //STREAM ADAPTER (TODO)
+        //holder.itemView.setOnClickListener{
+        //val intent = Intent(holder.elementoUI.context, StreamDetailActivity::class.java)
+        //intent.putExtra("stream", stream)
+        //holder.elementoUI.context.startActivity(intent)  (MIRAR EN LA MAIN ACTIVITY COMO RECUPERAR ESTOS DATOS)
+        //}
+
         holder.newsText.text = new.title;
         Picasso.get().load(new.imageUrl).into(holder.imageView);
     }

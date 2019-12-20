@@ -1,5 +1,6 @@
 package com.andreumargarit.gamecompanion.Utils
 
+import com.andreumargarit.gamecompanion.Models.ChatMessage
 import com.andreumargarit.gamecompanion.Models.NewModel
 import com.andreumargarit.gamecompanion.Models.UserModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -99,4 +100,33 @@ class UserDao {
                 failureListener(it);
             }
     }
+
+    fun GetAllMessages(successListener: (chats: List<ChatMessage>) -> (Unit), failureListener: (Error: Exception) -> (Unit))
+    {
+        FirebaseFirestore.getInstance()
+            .collection("chats")
+            //Get All Documents
+            .get()
+            //On Success
+            .addOnSuccessListener { querySnapshot ->
+                //Query Snapshot contains documents & metadata
+                val documents = querySnapshot.documents
+                val chatList = ArrayList<ChatMessage>()
+                documents.forEach { documentSnapshot ->
+                    //Document snapshot contains data & metadata
+                    val chat = documentSnapshot.toObject(ChatMessage::class.java)
+                    chat?.let {
+                        chatList.add(chat);
+
+                    }
+                }
+                successListener(chatList);
+            }
+            .addOnFailureListener {
+                failureListener(it);
+            }
+
+
+    }
+
 }

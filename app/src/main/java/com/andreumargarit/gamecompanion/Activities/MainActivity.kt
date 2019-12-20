@@ -2,8 +2,10 @@ package com.andreumargarit.gamecompanion.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.andreumargarit.gamecompanion.Fragments.NewsFragment
 import com.andreumargarit.gamecompanion.Fragments.ProfileFragment
+import com.andreumargarit.gamecompanion.Fragments.StreamFragment
 import com.andreumargarit.gamecompanion.R
 import com.andreumargarit.gamecompanion.Utils.Constants
 import com.google.android.gms.ads.AdRequest
@@ -15,6 +17,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setTitle("Hey!")
+            .setMessage("Are you sure you want to leave??")
+            .setPositiveButton("Yes!"){dialog, buttonId ->
+                finish()
+            }
+            .setNegativeButton("No!"){dialog, buttonId ->
+                dialog.dismiss()
+            }.show()
+    }
+
+
+
+
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_APPOPEN, null)
 
         instantiateAdd()
+
+        //TODO implementar en activityStream ( actividad que se abre al clickar en un stream de la StreamList
+        //val game = intent.getSerializableExtra("game") as? GameModel
+        //val stream = intent.getSerializableExtra("stream") as? StreamModel
 
         bottomNavigationView.setOnNavigationItemSelectedListener {menuItem ->
             when(menuItem.itemId){
@@ -44,6 +70,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.Stream ->{
                     FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_TABSTREAMCLICK, null)
+                    val streamFragment = StreamFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(fragmentContainer.id, streamFragment)
+                    fragmentTransaction.commit()
                 }
             }
         true

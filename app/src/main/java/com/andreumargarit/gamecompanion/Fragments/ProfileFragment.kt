@@ -30,19 +30,7 @@ import com.andreumargarit.gamecompanion.Utils.Constants
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ProfileFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
 
@@ -111,12 +99,12 @@ class ProfileFragment : Fragment() {
 
                 val userPhoto = requireContext().getSharedPreferences(Constants.FIELD_USERPROFILE, Context.MODE_PRIVATE).getString(Constants.FIELD_USERPHOTO, "")
 
-                if(userPhoto != "")
+                /*if(userPhoto != "")
                 {
                     val imageBytes = Base64.decode(userPhoto, 0)
                     val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                     avatarImageView.setImageBitmap(image)
-                }
+                }*/
 
                 UserDao().get(
                     UserId = userID,
