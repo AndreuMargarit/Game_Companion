@@ -14,7 +14,7 @@ data class StreamModel(
     @SerializedName("viewer_count") val viewerCount: Int?= null,
     @SerializedName("started_at") val startedAt: String?= null,
     val language: String?= null,
-    @SerializedName("thumbnail_url") val thumbnailUrl: String?= null
+    @SerializedName("thumbnail_url") var thumbnailUrl: String?= null
 
 ):Serializable
 {
@@ -25,6 +25,8 @@ data class StreamModel(
     {
         return thumbnailUrl?.replace("{width}", "300")?.replace("{height}", "300")
     }
+
+    var user: TwitchUserModel?= null
 }
 
 data class StreamResponse(

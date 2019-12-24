@@ -15,7 +15,7 @@ import com.andreumargarit.gamecompanion.Network.TwitchHttpClient
 
 import com.andreumargarit.gamecompanion.R
 import com.andreumargarit.gamecompanion.Utils.StreamsAdapter
-import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.fragment_stream.*
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -38,23 +38,21 @@ class StreamFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getStreams()
-
-
     }
-
-
     private fun getStreams() {
         Log.i("StreamFragment", "START_STREAMS")
         lifecycleScope.launch{
         try {
             val streamResponse = TwitchHttpClient.service.getStreams()
-            val streams = streamResponse.results ?: emptyList()
+            var streams = streamResponse.results ?: emptyList()
             getGamesForStreams(streams)
+            SetThumbnailsSize(streams)
+            getUsersForStreams(streams)
             Log.i("StreamFragment", "Got ${streams.count()} streams")
             Log.i("StreamFragment", "Got streams with games ${streams.map{it.game}}")
-            recyclerView.adapter = StreamsAdapter(ArrayList(streams.orEmpty()))
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            //recyclerView.adapter.notifyDataSetChanged()
+            streamsRecyclerView.adapter = StreamsAdapter(ArrayList(streams.orEmpty()))
+            streamsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         } catch(error: IOException){
             //No response
             Log.w("StreamFragment", "No internet")
@@ -92,6 +90,13 @@ class StreamFragment : Fragment() {
      */
     }
 
+    private fun SetThumbnailsSize(streams: List<StreamModel>) : List<StreamModel>{
+        streams.forEach { stream->
+            stream.thumbnailUrl =  stream.thumbnailUrl?.replace("{width}", "300")?.replace("{height}", "300")
+        }
+        return streams
+    }
+
     private suspend fun getGamesForStreams(streams: List<StreamModel>): List<StreamModel> {
         val ids = streams.map {
             return@map it.gameId ?: ""
@@ -127,6 +132,22 @@ class StreamFragment : Fragment() {
         })
 
  */
+    }
+
+    private suspend fun getUsersForStreams(streams: List<StreamModel>): List<StreamModel>
+    {
+        val ids = streams.map {
+            return@map it.userID ?: ""
+        }
+
+        val users = TwitchHttpClient.service.getUsers(userID = ids).results ?: emptyList<TwitchUserModel>()
+
+        streams.forEach { stream-> users.forEach { user->
+            if(stream.userID == user.id)
+                stream.user = user;
+            }
+        }
+        return streams
     }
 
 
