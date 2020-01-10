@@ -39,29 +39,30 @@ class StreamFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getStreams()
     }
+
     private fun getStreams() {
         Log.i("StreamFragment", "START_STREAMS")
         lifecycleScope.launch{
-        try {
-            val streamResponse = TwitchHttpClient.service.getStreams()
-            var streams = streamResponse.results ?: emptyList()
-            getGamesForStreams(streams)
-            SetThumbnailsSize(streams)
-            getUsersForStreams(streams)
-            Log.i("StreamFragment", "Got ${streams.count()} streams")
-            Log.i("StreamFragment", "Got streams with games ${streams.map{it.game}}")
-            streamsRecyclerView.adapter = StreamsAdapter(ArrayList(streams.orEmpty()))
-            streamsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        } catch(error: IOException){
-            //No response
-            Log.w("StreamFragment", "No internet")
-        } catch (error: HttpException)
-        {
-            Log.w("StreamFragment", error.message())
+            try {
+                val streamResponse = TwitchHttpClient.service.getStreams()
+                var streams = streamResponse.results ?: emptyList()
+                getGamesForStreams(streams)
+                SetThumbnailsSize(streams)
+                SetUserLogoSize(streams)
+                getUsersForStreams(streams)
+                Log.i("StreamFragment", "Got ${streams.count()} streams")
+                Log.i("StreamFragment", "Got streams with games ${streams.map{it.game}}")
+                streamsRecyclerView.adapter = StreamsAdapter(ArrayList(streams.orEmpty()))
+                streamsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            } catch(error: IOException){
+                //No response
+                Log.w("StreamFragment", "No internet")
+            } catch (error: HttpException)
+            {
+                Log.w("StreamFragment", error.message())
+            }
         }
     }
-
 
     /*TwitchHttpClient.service.getStreams(null).enqueue(object : Callback<StreamResponse>{
         override fun onFailure(call: Call<StreamResponse>, t: Throwable)
@@ -88,11 +89,17 @@ class StreamFragment : Fragment() {
     })
 
      */
-    }
 
     private fun SetThumbnailsSize(streams: List<StreamModel>) : List<StreamModel>{
         streams.forEach { stream->
-            stream.thumbnailUrl =  stream.thumbnailUrl?.replace("{width}", "300")?.replace("{height}", "300")
+            stream.thumbnailUrl =  stream.thumbnailUrl?.replace("{width}", "1280")?.replace("{height}", "720")
+        }
+        return streams
+    }
+
+    private fun SetUserLogoSize(streams: List<StreamModel>) : List<StreamModel>{
+        streams.forEach { stream->
+            stream.user?.profileImage =  stream.user?.profileImage?.replace("{width}", "100")?.replace("{height}", "100")
         }
         return streams
     }

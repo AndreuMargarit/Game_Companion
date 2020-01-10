@@ -41,12 +41,16 @@ class StreamsAdapter (var list: ArrayList<StreamModel>) : RecyclerView.Adapter<S
         holder.title.text = stream.title
         holder.username.text = stream.userName
         Picasso.get().load(stream.thumbnailUrl).into(holder.thumbnail)
-
+        Picasso.get().load(stream.user?.profileImage).into(holder.userLogo)
+        holder.viewerCount.text = stream.viewerCount.toString()
     }
+
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val title: TextView = item.streamTitleTextView
         val username: TextView = item.streamerUsernameTextView
         val thumbnail: ImageView = item.streamsImageView
+        val userLogo: ImageView = item.logoUser
+        val viewerCount : TextView = item.viewerCount
     }
 }
 

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#213476</color>
-    <color name="colorPrimaryDark">#101853</color>
+    <color name="colorPrimary">#111217</color>
+    <color name="colorPrimaryDark">#1C232B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorRegularText">#E5E0D6</color>
+
     <color name ="colorLoginLink">#0088FF</color>
-    <color name ="colorNewsBackground">#103363</color>
+    <color name ="colorNewsBackground">#16191E</color>
 </resources>
