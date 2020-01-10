@@ -19,6 +19,8 @@
 
     <string name="login_error_invalid_password">Contrasenya invàlida</string>
 
+    <string name="streams_detail_activity_total_views">Visionats totals: </string>
+
     <string name="news_title">NOTÍCIES</string>
 
     <string name="profile_success_uploading_image_message">S\'ha carregat la imatge correctament</string>

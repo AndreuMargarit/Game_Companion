@@ -8,21 +8,20 @@
     android:background="@color/colorNewsBackground">
 
     <TextView
+        android:id = "@+id/newsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:id = "@+id/newsTextView"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_large"
         android:text="Title"
-        android:textColor="@color/colorWhite"
-        android:fontFamily="@font/appfont"
+        android:textColor="@color/colorRegularText"
         android:textStyle="bold"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
         android:id = "@+id/newsImageView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
         android:src = "@drawable/aphelios"
         android:layout_marginBottom="26dp"/>
 </LinearLayout>
