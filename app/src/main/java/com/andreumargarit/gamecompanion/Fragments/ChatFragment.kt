@@ -9,16 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreumargarit.gamecompanion.Models.ChatMessage
-import com.andreumargarit.gamecompanion.Models.NewModel
 
 import com.andreumargarit.gamecompanion.R
-import com.andreumargarit.gamecompanion.Utils.ChatAdapter
-import com.andreumargarit.gamecompanion.Utils.Constants
-import com.andreumargarit.gamecompanion.Utils.NewsAdapter
-import com.andreumargarit.gamecompanion.Utils.UserDao
+import com.andreumargarit.gamecompanion.Utils.*
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_chat.*
-import kotlinx.android.synthetic.main.fragment_news.*
 
 class ChatFragment : Fragment() {
 
@@ -35,10 +30,12 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sendButton.setOnClickListener {
-        sendMessage(textMessage.text.toString())}
+        sendMessage(chatTextMessage.text.toString())
+        chatTextMessage.text.clear()}
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter;
+        chatRecyclerView.adapter = adapter
+        chatRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
 
         subscribeToMessageChanges()
     }
@@ -49,7 +46,7 @@ class ChatFragment : Fragment() {
 
     private  fun sendMessage(text: String)
     {
-        val message = ChatMessage(text = text);
+        val message = ChatMessage(message = text);
         FirebaseFirestore.getInstance()
             .collection("chat")
             .add(message)

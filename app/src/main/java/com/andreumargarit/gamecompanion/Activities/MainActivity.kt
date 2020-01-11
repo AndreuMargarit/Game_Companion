@@ -3,6 +3,7 @@ package com.andreumargarit.gamecompanion.Activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.andreumargarit.gamecompanion.Fragments.ChatFragment
 import com.andreumargarit.gamecompanion.Fragments.NewsFragment
 import com.andreumargarit.gamecompanion.Fragments.ProfileFragment
 import com.andreumargarit.gamecompanion.Fragments.StreamFragment
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             when(menuItem.itemId){
                 R.id.chat ->{
                     FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_TABCHATCLICK, null)
+                    val chatFragment = ChatFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(fragmentContainer.id, chatFragment)
+                    fragmentTransaction.commit()
                 }
                 R.id.news ->{
                     FirebaseAnalytics.getInstance(this).logEvent(Constants.ANALYTICEVENT_TABNEWSCLICK, null)
