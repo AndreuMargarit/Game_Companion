@@ -35,7 +35,7 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sendButton.setOnClickListener {
-        sendMessage(sendButton.text.toString())} //TODO: fer un editText on posar el missatge i enviar aixo, no el sendButton.text
+        sendMessage(textMessage.text.toString())}
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter;

@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         instantiateAdd()
 
-        //TODO implementar en activityStream ( actividad que se abre al clickar en un stream de la StreamList
-        //        //val game = intent.getSerializableExtra("game") as? GameModel
-        //        //val stream = intent.getSerializableExtra("stream") as? StreamModel
-
         bottomNavigationView.setOnNavigationItemSelectedListener {menuItem ->
             when(menuItem.itemId){
                 R.id.chat ->{

@@ -28,12 +28,12 @@ class ChatAdapter (var list: ArrayList<ChatMessage>) : RecyclerView.Adapter<Chat
 
 
 
-        //holder.newsText.text = new.title;
-        //Picasso.get().load(new.imageUrl).into(holder.imageView);
+        holder.chatText.text = chat.text;
+        Picasso.get().load(chat.avatar).into(holder.userImage);
     }
     class ViewHolder(item: View): RecyclerView.ViewHolder(item) {
-        val newsText: TextView = item.newsTextView
-        val imageView: ImageView = item.newsImageView
+        val chatText: TextView = item.newsTextView
+        val userImage: ImageView = item.newsImageView
     }
 }
 
