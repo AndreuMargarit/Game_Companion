@@ -2,19 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="64dp">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_medium">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:id="@+id/chatAvatarImageView"
+        android:layout_width="@dimen/user_logo_medium"
+        android:layout_height="@dimen/user_logo_medium"
         android:layout_marginEnd="@dimen/margin_small"
-        android:id="@+id/chatAvatarImageView"></ImageView>
+        />
 
     <TextView
         android:id="@+id/chatMessageTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_medium"
         android:textColor="@color/colorWhite"
-        android:layout_gravity="center"
+        android:layout_gravity="top"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="32dp"></TextView>
+        />
+
 </LinearLayout>
