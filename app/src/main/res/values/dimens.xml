@@ -8,6 +8,7 @@
     <dimen name="margin_small">8dp</dimen>
 
     <dimen name="user_logo_small">32dp</dimen>
+    <dimen name="user_logo_medium">64dp</dimen>
 
     <dimen name="stream_height">90dp</dimen>
 

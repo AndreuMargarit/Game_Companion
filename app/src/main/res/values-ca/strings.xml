@@ -31,5 +31,6 @@
     <string name="register_username_created">S\'ha creat el nom d\'usuari amb èxit</string>
 
     <string name="profile_already_have_account">Ja tens un compte?</string>
+    <string name="chat_hint_message">Escriu un missatge</string>
 
 </resources>

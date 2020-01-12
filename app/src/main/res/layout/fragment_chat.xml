@@ -4,18 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="bottom"
+    android:layout_marginBottom="100dp"
     tools:context=".Fragments.ChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"/>
 
-    <Button
-        android:id = "@+id/sendButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text = "Send"/>
+        android:gravity="right"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/chatTextMessage"
+            android:hint="@string/chat_hint_message"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="start"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_send_black_24dp"
+            android:layout_margin="@dimen/margin_small"/>
+    </LinearLayout>
 </LinearLayout>

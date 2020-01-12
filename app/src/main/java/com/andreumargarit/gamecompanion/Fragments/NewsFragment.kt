@@ -44,8 +44,8 @@ class NewsFragment : Fragment() {
     {
         UserDao().getAllNews(successListener = { _news ->
 
-            recyclerView.adapter = NewsAdapter(ArrayList(_news.orEmpty()))
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView?.adapter = NewsAdapter(ArrayList(_news.orEmpty()))
+            recyclerView?.layoutManager = LinearLayoutManager(requireContext())
 
         },
             failureListener = {
